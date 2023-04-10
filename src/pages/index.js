@@ -10,7 +10,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea,Grid ,CardActions,Button} from '@mui/material';
 
-import data from './utils/data';
+import data from '../utils/data';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
