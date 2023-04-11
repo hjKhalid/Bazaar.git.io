@@ -6,6 +6,9 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/';
 import SearchIcon from './SearchIcon'
+import styles from '@/styles/Home.module.css'
+import NextLink from 'next/link';
+import Link from '@mui/material/Link'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -18,7 +21,19 @@ function appBarLabel(label) {
       <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1 }}>
         {label}
       </Typography>
-      <div><SearchIcon/></div>
+      <div className={styles.SearchIcon}><SearchIcon/></div>
+      <div className={styles.navigationLink}>
+        <div>
+       
+       <Typography>
+       <NextLink href='/cart'>Add to cart</NextLink> </Typography> </div>
+        <div>
+          <NextLink href="/login">
+          <Typography>Login</Typography>
+          </NextLink>
+        
+        </div>
+      </div>
     </Toolbar>
   );
 }
