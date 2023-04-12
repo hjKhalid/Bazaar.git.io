@@ -21,17 +21,18 @@ function appBarLabel(label) {
       <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1 }}>
         {label}
       </Typography>
-      <div className={styles.SearchIcon}><SearchIcon/></div>
+      <div className={styles.SearchIcon}><SearchIcon />
+      </div>
       <div className={styles.navigationLink}>
         <div>
-       
-       <Typography>
-       <NextLink href='/cart'>Add to cart</NextLink> </Typography> </div>
+          <Typography>
+            <NextLink href='/cart'>Add to cart</NextLink>
+          </Typography>
+        </div>
         <div>
-          <NextLink href="/login">
-          <Typography>Login</Typography>
-          </NextLink>
-        
+          <Typography>
+            <NextLink href='/login'>Login</NextLink>
+          </Typography>
         </div>
       </div>
     </Toolbar>
@@ -47,13 +48,13 @@ const darkTheme = createTheme({
   },
 });
 
-export default function EnableColorOnDarkAppBar() {
+export default function EnableColorOnDarkAppBar(props) {
   return (
     <Stack spacing={2} sx={{ flexGrow: 1 }}>
       <ThemeProvider theme={darkTheme}>
-       
+
         <AppBar position="sticky" color="primary">
-          {appBarLabel('Bazaar')}
+          {appBarLabel(`${props.HeadingName}`)}
         </AppBar>
       </ThemeProvider>
     </Stack>

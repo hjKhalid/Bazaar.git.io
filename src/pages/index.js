@@ -24,7 +24,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Navbar />
+        <Navbar HeadingName="Bazaar"/>
         <div>
           <h1>Products</h1>
           <Grid container spacing={3}>

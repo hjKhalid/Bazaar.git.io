@@ -23,7 +23,7 @@ export default function ProductScreen() {
         return <div>Product Not Found</div>;
     }
     return (<>
-        <Navbar />
+        <Navbar HeadingName={product.name} />
         <div className={styles.section}>
             <NextLink href="/" passHref>
                 <Link>
