@@ -1,17 +1,14 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import NextLink from 'next/link';
+
 import styles from '@/styles/Home.module.css'
 import Navbar from './component/Navbar'
 import Footer from './component/Footer'
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea, Grid, CardActions, Button } from '@mui/material';
+import ActionAreaCard from './component/ActionAreaCard'
 
-import data from '../utils/data';
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -27,33 +24,7 @@ export default function Home() {
         <Navbar HeadingName="Bazaar"/>
         <div>
           <h1>Products</h1>
-          <Grid container spacing={3}>
-            {data.products.map((product) => (
-              <Grid item md={4} key={product.name}>
-                <Card>
-
-                  <NextLink href={`/product/${product.slug}`} passHref>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        image={product.image}
-                        title={product.name}
-                      ></CardMedia>
-                      <CardContent>
-                        <Typography>{product.name}</Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </NextLink>
-                  <CardActions>
-                    <Typography>${product.price}</Typography>
-                    <Button size="small" color="primary">
-                      Add to cart
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+          <ActionAreaCard/>
         </div>
         <footer>
           <Footer />
