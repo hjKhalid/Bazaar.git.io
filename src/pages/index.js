@@ -1,7 +1,9 @@
 import Head from 'next/head'
+import * as React from 'react';
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-
+import { Grid } from '@mui/material';
+import axios from 'axios'
 import styles from '@/styles/Home.module.css'
 import Navbar from './component/Navbar'
 import Footer from './component/Footer'
@@ -12,6 +14,22 @@ import ActionAreaCard from './component/ActionAreaCard'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [productDetails,setProductDetails]=React.useState("");
+  React.useEffect(()=>{
+   const url ="http://localhost:3000/api/products";
+   async function fetchData(){
+    try {
+      const data =await axios.get(url);
+      setProductDetails(data.data);
+    
+    } catch (error) {
+    console.log(error);      
+    }
+  }
+  fetchData(); 
+   
+},[])
+  console.log(productDetails)
   return (
     <>
       <Head>
@@ -21,10 +39,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Navbar HeadingName="Bazaar"/>
+        <Navbar HeadingName="Bazaar" />
         <div>
           <h1>Products</h1>
-          <ActionAreaCard/>
+          
+            {productDetails? productDetails.map((e)=>{
+             <ActionAreaCard  key={e.id} name={e.name} slug={e.slug} image={e.image} price={e.price} />
+            }):<ActionAreaCard name="free-t" slug="free-tshirt" image="/images/shirt1.jpg" price="20" />}
+            
+          
+
         </div>
         <footer>
           <Footer />

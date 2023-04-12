@@ -6,54 +6,40 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import NextLink from 'next/link';
 import data from '../../utils/data';
-import axios from 'axios'
+
 import {  Grid, CardActions, Button } from '@mui/material';
 // import data from '@/utils/data';
 
 export default function ActionAreaCard(props) {
-  const [productDetails,setProductDetails]=React.useState("");
-  React.useEffect(()=>{
-   const url ="http://localhost:3000/api/products";
-   async function fetchData(){
-    try {
-      const data =await axios.get(url);
-      setProductDetails(data.data);
-    
-    } catch (error) {
-    console.log(error);      
-    }
-  }
-  fetchData(); 
-   
-},[])
-  console.log(productDetails)
+
   return (
-    <Grid container spacing={3}>
-    {data.products.map((product) => (
-      <Grid item md={4} key={product.name}>
+    
+     <Grid container spacing={3}> 
+      <Grid item md={4}>
         <Card>
 
-          <NextLink href={`/product/${product.slug}`} passHref>
+          <NextLink href={`/product/${props.slug}`} passHref>
             <CardActionArea>
               <CardMedia
                 component="img"
-                image={product.image}
-                title={product.name}
+                image={props.image}
+                title={props.name}
               ></CardMedia>
               <CardContent>
-                <Typography>{product.name}</Typography>
+                <Typography>{props.name}</Typography>
               </CardContent>
             </CardActionArea>
           </NextLink>
           <CardActions>
-            <Typography>${product.price}</Typography>
+            <Typography>${props.price}</Typography>
             <Button size="small" color="primary">
               Add to cart
             </Button>
           </CardActions>
         </Card>
       </Grid>
-    ))}
-  </Grid>
+    </Grid>
+    
+  
   );
 }
