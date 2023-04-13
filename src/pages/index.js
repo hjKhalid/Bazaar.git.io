@@ -9,27 +9,35 @@ import Navbar from './component/Navbar'
 import Footer from './component/Footer'
 import ActionAreaCard from './component/ActionAreaCard'
 
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea, CardActions, Button } from '@mui/material';
+import NextLink from 'next/link';
+
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [productDetails,setProductDetails]=React.useState("");
-  React.useEffect(()=>{
-   const url ="http://localhost:3000/api/products";
-   async function fetchData(){
-    try {
-      const data =await axios.get(url);
-      setProductDetails(data.data);
-    
-    } catch (error) {
-    console.log(error);      
+  const [productDetails, setProductDetails] = React.useState("");
+  React.useEffect(() => {
+    const url = "http://localhost:3000/api/products";
+    async function fetchData() {
+      try {
+        const data = await axios.get(url);
+        setProductDetails(data.data);
+
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
-  fetchData(); 
-   
-},[])
-  console.log(productDetails)
+    fetchData();
+
+  }, [])
+  console.log(productDetails);
+  
   return (
     <>
       <Head>
@@ -42,12 +50,33 @@ export default function Home() {
         <Navbar HeadingName="Bazaar" />
         <div>
           <h1>Products</h1>
-          
-            {productDetails? productDetails.map((e)=>{
-             <ActionAreaCard  key={e.id} name={e.name} slug={e.slug} image={e.image} price={e.price} />
-            }):<ActionAreaCard name="free-t" slug="free-tshirt" image="/images/shirt1.jpg" price="20" />}
-            
-          
+          <Grid container spacing={3}>
+            {productDetails ? productDetails.map((product) => (
+              <Grid item md={4} key={product.id ? product.id : "01"}>
+                <Card>
+                  <NextLink href={`/product/${product.slug}`} passHref>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        image={product.image ? product.image : "/images/shirt1.jpg"}
+                        title={product.name ? product.name : "t-shirt"}
+                      ></CardMedia>
+                      <CardContent>
+                        <Typography>{product.name ? product.name : "t-shirt"}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </NextLink>
+                  <CardActions>
+                    <Typography>${product.price ? product.price : "20"}</Typography>
+                    <Button size="small" color="primary">
+                      Add to cart
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            )) : ""}
+          </Grid>
+
 
         </div>
         <footer>

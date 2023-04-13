@@ -5,41 +5,60 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import NextLink from 'next/link';
-import data from '../../utils/data';
+import { Grid, CardActions, Button } from '@mui/material';
 
-import {  Grid, CardActions, Button } from '@mui/material';
-// import data from '@/utils/data';
 
-export default function ActionAreaCard(props) {
+export default function ActionAreaCard() {
+  const [productDetails, setProductDetails] = React.useState("");
+  React.useEffect(() => {
+    const url = "http://localhost:3000/api/products";
+    async function fetchData() {
+      try {
+        const data = await axios.get(url);
+        setProductDetails(data.data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+
+  }, [])
+  console.log(productDetails);
 
   return (
-    
-     <Grid container spacing={3}> 
-      <Grid item md={4}>
-        <Card>
-
-          <NextLink href={`/product/${props.slug}`} passHref>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                image={props.image}
-                title={props.name}
-              ></CardMedia>
-              <CardContent>
-                <Typography>{props.name}</Typography>
-              </CardContent>
-            </CardActionArea>
-          </NextLink>
-          <CardActions>
-            <Typography>${props.price}</Typography>
-            <Button size="small" color="primary">
-              Add to cart
-            </Button>
-          </CardActions>
-        </Card>
+    <>
+      <h1>Products</h1>
+      <Grid container spacing={3}>
+        {productDetails ? productDetails.map((product) => (
+          <Grid item md={4} key={product.name ? product.name : "t-shirt"}>
+            <Card>
+              <NextLink href={`/product/${product.slug}`} passHref>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    image={product.image ? product.image : "/images/shirt1.jpg"}
+                    title={product.name ? product.name : "t-shirt"}
+                  ></CardMedia>
+                  <CardContent>
+                    <Typography>{product.name ? product.name : "t-shirt"}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </NextLink>
+              <CardActions>
+                <Typography>${product.price ? product.price : "20"}</Typography>
+                <Button size="small" color="primary">
+                  Add to cart
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        )) : ""}
       </Grid>
-    </Grid>
-    
-  
+
+
+    </>
+
+
   );
 }
